@@ -127,15 +127,20 @@ header{
     margin-left: 6%;
     font-weight: bold;
     height: 44px;
-    display:inline;
+    display: flex;
     white-space: nowrap;
+    justify-content: center;
 }
 
-.try{
+.icon{
     height: 18px;
     margin-right: 8px;
     min-width: 18px;
     width: 18px;
+}
+
+.botao{
+    margin-bottom: 20px;
 }
 
 @media (max-width: 600px){
