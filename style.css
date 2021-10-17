@@ -20,20 +20,23 @@ header{
 }
 
 .header-hero{
-    font-family: TwitterChirpExtendedHeavy, Verdana, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-family: "TwitterChirpExtendedHeavy", Verdana, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    src: url("./assets/font/chirp-extended-heavy-web.woff");
     color: #d9d9d9;
     font-size: 64px;
-    line-height: 84px;
     letter-spacing: -1.2px;
     font-weight: 700;
     min-width: 0px;
+    margin-bottom: 48px;
+    margin-top: 48px;
 }
 
 .header-hero-two{
     font-family: TwitterChirpExtendedHeavy, Verdana, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    src: url("./assets/font/chirp-extended-heavy-web.woff");
     color: #d9d9d9;
     font-size: 31px;
-    line-height: 84px;
+    margin-bottom: 32px;
     letter-spacing: -1.2px;
     font-weight: 700;
     min-width: 0px;
@@ -58,6 +61,7 @@ header{
     display: flex;
     font-size:0;
     margin:0 auto;
+    height: auto;
 }
 
 .imagem{
@@ -76,7 +80,6 @@ header{
     align-items: stretch;
     flex-direction: column;
     justify-content: space-around;
-    position: relative;
     padding: 16px;
 }
 
@@ -95,7 +98,6 @@ header{
 }
 
 .twitterbg {
-    position: relative;
     display: flex;
     width: 100%;
     height: 100%;
@@ -121,32 +123,6 @@ header{
     margin: auto;
     height: 50%;
 }
-
-/* .button{
-    font-family: TwitterChirpExtendedHeavy, Verdana, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    padding: 17px;
-    border-radius: 17px;
-    border: none;
-    margin-left: 6%;
-    font-weight: bold;
-    height: 44px;
-    display: flex;
-    white-space: nowrap;
-    justify-content: center;
-} */
-
-/* .btn {
-    font-family: TwitterChirpExtendedHeavy, Verdana, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    background-color: white;
-    font-weight: bold;
-    border: none;
-    color: black;
-    padding: 12px 16px;
-    font-size: 13px;
-    cursor: pointer;
-    border-radius: 17px;
-    margin-left: 6%;
-  } */
 
 .btnT{
     width: 300px;
@@ -205,6 +181,91 @@ header{
     width: 18px;
 }
 
-@media (max-width: 600px){
+@media only screen and (max-width: 1000px){
+    .flutuante{float: none; width: 100%;}
+    
+    #container{
+        flex-direction: column;
+        align-items: flex-start;
+    }
 
+    .textos{
+        order: 1;
+        margin-bottom: auto;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: auto;
+        justify-content: center;
+        max-width: 600px;
+        min-width: 45vw;
+        width: 100%;
+    }
+
+    .itensLD{
+        padding: 20px;
+        justify-content: center;
+    }
+
+    .header-hero-two{
+        line-height: 36px;
+        margin-bottom: 32px;
+    }
+
+    .imagem{
+        order: 2;
+        height: 500px;
+    }
+}
+
+@media only screen and (max-width: 500px){
+    .flutuante{float: none; width: 100%;}
+    
+    #container{
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .textos{
+        order: 1;
+        margin-bottom: auto;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: auto;
+        justify-content: center;
+        max-width: 600px;
+        min-width: 45vw;
+        width: 100%;
+        padding: 0px;
+    }
+
+    .itensLD{
+        padding: 20px;
+        justify-content: center;
+    }
+
+    .header-hero{
+        font-size: 40px;
+        letter-spacing: -0.8px;
+        margin-top: 40px;
+        margin-bottom: 40px;
+    }
+
+    .header-hero-two{
+        font-size: 23px;
+        line-height: 28px;
+        margin-bottom: 20px;
+    }
+
+    .imagem{
+        order: 2;
+        height: 500px;
+    }
+
+    .footer{   
+        padding: 0px;
+        padding-top: 12px;
+        padding-bottom: 12px;
+        padding-right: 16;
+        padding-left: 16;
+    }
 }
