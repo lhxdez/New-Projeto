@@ -164,11 +164,12 @@ header{
     line-height: 20px;
 }
 
-.corTexto3 {
+.entrar {
     color: #1D9BF0;
+    cursor: pointer;
 }
 
-#txt-ellipses {
+.txt-ellipses {
     white-space: nowrap;
     width: 15.58em;
     overflow: hidden;
@@ -181,6 +182,90 @@ header{
     margin-right: 8px;
     min-width: 18px;
     width: 18px;
+}
+
+/*Classes do modal (tela de login)*/
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    padding-top: 60px;
+    border-radius: 4px;
+    background-color: rgba(0,0,0,0.7);
+}
+
+.modal-content {
+    background-color: black;
+    margin: 5% auto 15% auto;
+    border: 1px solid #888;
+    width: 60%;
+    height: fit-content;
+    border-radius: 10px;
+}
+
+.imgContainer {
+    text-align: center;
+    margin: 24px 0 12px 0;
+    position: relative;
+}
+
+.closeIcon {
+    position: absolute;
+    right: 25px;
+    top: 0;
+    color: white;
+    font-size: 35px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.birdLogin{
+    width: 5%;
+    margin-left: auto;
+    margin-right: auto;
+    fill: white;
+}
+
+.modalContainer{
+    padding: 16px;
+}
+
+.modalFontStyle{
+    font-family: TwitterChirpExtendedHeavy, Verdana, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    src: url("./assets/font/chirp-extended-heavy-web.woff");
+    color: #d9d9d9;
+    font-size: 14px;
+    letter-spacing: -1.2px;
+    font-weight: 700;
+    min-width: 0px;
+}
+
+.caixaTexto{
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #1DA1F2;
+    box-sizing: border-box;
+    background-color: black;
+    border-radius: 10px;
+    color: white;
+}
+
+.modalButton{
+    background-color: white;
+    color: black;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    border-radius: 100px;
 }
 
 @media only screen and (max-width: 1000px){
