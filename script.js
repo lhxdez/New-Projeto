@@ -10,13 +10,28 @@ function docReady(func) {
     });
 }
 
+/*Exibir modal de login*/
 function exibirModal(){
     pegarElemento("telaLogin").style.display='block';
 }
 
-/*Função para fechar o modal*/
-function fechar(){
+/*Função para fechar o modal de login*/
+function fecharLogin(){
     pegarElemento("telaLogin").style.display='none';
+}
+
+/*Função para exibir o modal de consulta caso o usuário esteja logado*/
+function exibirConsulta(nome){
+    fecharLogin();
+    pegarElemento("welcomeText").innerHTML = "BEM VINDO(A) " + nome;
+    pegarElemento("telaConsulta").style.display='block';
+}
+
+function logout(){
+    localStorage.clear();
+    pegarElemento("loginEmail").value = "";
+    pegarElemento("loginSenha").value = "";
+    pegarElemento("telaConsulta").style.display='none';
 }
 
 /*Fechar o modal se clicar fora da div de login*/
@@ -84,6 +99,7 @@ function pegar_nome(page, email){
                     localStorage.setItem("usuario_nome", JSON.stringify(resp["data"][i]["first_name"]));
                     again = false;
                     console.log(localStorage.getItem("usuario_nome"));
+                    exibirConsulta(localStorage.getItem("usuario_nome"));
                     return;
                 }
             }
@@ -166,13 +182,8 @@ function logar() {
 docReady(function () {
     var usuario_logado = localStorage.getItem("usuario_logado");
     var usuario_nome = localStorage.getItem("usuario_nome");
-    var usuario_token = localStorage.getItem("usuario_token");
     if (usuario_logado || usuario_logado === "true") {
         console.log("Você está logado como: " + usuario_nome);
+        exibirConsulta(usuario_nome);
     }
-
 });
-
-function deslogar() {
-    localStorage.clear();
-};
