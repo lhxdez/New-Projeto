@@ -187,3 +187,25 @@ docReady(function () {
         exibirConsulta(usuario_nome);
     }
 });
+
+function buscar(){
+    var container = document.querySelector('.listaB');
+    document.querySelector('.consultaB').addEventListener('click', function(){
+            var query = document.querySelector('.caixaB').value
+            axios.get('https://api.dictionaryapi.dev/api/v2/entries/en/' + query)
+            .then(function(res){
+
+                var elemento = document.getElementById("lB");
+                while (elemento.firstChild) {
+                    elemento.removeChild(elemento.firstChild);
+                }
+
+                var response = res.data[0].meanings;    
+                    for(var i = 0; i < Object.keys(response).length; i++ ){
+                        var li = document.createElement('li');
+                        li.innerHTML = response[i].definitions[0].definition; 
+                        container.appendChild(li);
+                    };
+             });
+    });   
+};
