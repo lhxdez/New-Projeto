@@ -1,5 +1,15 @@
 const api_login = "https://reqres.in/api/users";
 
+Object.size = function (obj) {
+    var size = 0,
+            key;
+    for (key in obj) {
+        if (obj.hasOwnProperty(key))
+            size++;
+    }
+    return size;
+};
+
 function pegarElemento(valor) {
     return document.getElementById(valor);
 }
@@ -11,32 +21,32 @@ function docReady(func) {
 }
 
 /*Exibir modal de login*/
-function exibirModal(){
-    pegarElemento("telaLogin").style.display='block';
+function exibirModal() {
+    pegarElemento("telaLogin").style.display = 'block';
 }
 
-/*Função para fechar o modal de login*/
-function fecharLogin(){
-    pegarElemento("telaLogin").style.display='none';
+/*FunÃ§Ã£o para fechar o modal de login*/
+function fecharLogin() {
+    pegarElemento("telaLogin").style.display = 'none';
 }
 
-/*Função para exibir o modal de consulta caso o usuário esteja logado*/
-function exibirConsulta(nome){
+/*FunÃ§Ã£o para exibir o modal de consulta caso o usuÃ¡rio esteja logado*/
+function exibirConsulta(nome) {
     fecharLogin();
     pegarElemento("welcomeText").innerHTML = "BEM VINDO(A) " + nome;
-    pegarElemento("telaConsulta").style.display='block';
+    pegarElemento("telaConsulta").style.display = 'block';
 }
 
-function logout(){
+function logout() {
     localStorage.clear();
     pegarElemento("loginEmail").value = "";
     pegarElemento("loginSenha").value = "";
-    pegarElemento("telaConsulta").style.display='none';
+    pegarElemento("telaConsulta").style.display = 'none';
 }
 
 /*Fechar o modal se clicar fora da div de login*/
 var modal = pegarElemento("telaLogin");
-window.onclick = function(event) {
+window.onclick = function (event) {
     if (event.target == modal) {
         modal.style.display = "none";
     }
@@ -56,7 +66,7 @@ function arrayUrl(valor) {
 }
 
 function http_request(url, method, type, data, callback, headers) {
-    
+
     var xmlHttp = new XMLHttpRequest();
     if (typeof headers !== "undefined" && headers && headers !== null) {
         var size_headers = Object.size(headers) || null;
@@ -65,9 +75,9 @@ function http_request(url, method, type, data, callback, headers) {
 
     /*Status 200 = login succesful, status 400 = login error*/
     xmlHttp.onreadystatechange = function () {
-        if (xmlHttp.readyState === 4 && xmlHttp.status === 200){
+        if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
             callback(xmlHttp.responseText);
-        }else if(xmlHttp.readyState === 4 && xmlHttp.status === 400){
+        } else if (xmlHttp.readyState === 4 && xmlHttp.status === 400) {
             swal("Erro", "E-mail ou senha incorretos", "error")
         }
     };
@@ -83,8 +93,8 @@ function http_request(url, method, type, data, callback, headers) {
     xmlHttp.send(arrayUrl(data));
 }
 
-/*Função para recuperar o nome do usuário logado*/
-function pegar_nome(page, email){
+/*FunÃ§Ã£o para recuperar o nome do usuÃ¡rio logado*/
+function pegar_nome(page, email) {
     if (page === null) {
         return false;
     }
@@ -109,43 +119,44 @@ function pegar_nome(page, email){
             }
         });
     } catch (e) {
-        console.log("Houve algum erro ou usuário não encontrado");
+        console.log("Houve algum erro ou usuÃ¡rio nÃ£o encontrado");
         return false;
     }
 
-};
+}
+;
 
-/*Funções para conferir os campos de email e senha a cada tecla*/
+/*FunÃ§Ãµes para conferir os campos de email e senha a cada tecla*/
 var inputEmail = pegarElemento("loginEmail");
 var inputSenha = pegarElemento("loginSenha");
 
-inputEmail.addEventListener('keyup', function(){
+inputEmail.addEventListener('keyup', function () {
     var email = inputEmail.value;
     var erro = pegarElemento("emailError");
 
     if (!email || email.length <= 3 || typeof email === "undefined") {
-        erro.innerHTML = "*EMAIL INVÁLIDO";
+        erro.innerHTML = "*EMAIL INVÃ?LIDO";
         inputEmail.className = "caixaTextoErro";
-    }else{
+    } else {
         erro.innerHTML = "";
         inputEmail.className = "caixaTexto";
     }
 })
 
-inputSenha.addEventListener('keyup', function(){
+inputSenha.addEventListener('keyup', function () {
     var senha = inputSenha.value;
     var erro = pegarElemento("passwordError");
 
     if (!senha || senha.length <= 3 || typeof senha === "undefined") {
         erro.innerHTML = "*SENHA MUITO CURTA";
         inputSenha.className = "caixaTextoErro";
-    }else{
+    } else {
         erro.innerHTML = "";
         inputSenha.className = "caixaTexto";
     }
 })
 
-/*Função chamada pelo botão de logar*/
+/*FunÃ§Ã£o chamada pelo botÃ£o de logar*/
 function logar() {
     var email = pegarElemento("loginEmail").value;
     var senha = pegarElemento("loginSenha").value;
@@ -173,39 +184,74 @@ function logar() {
             localStorage.setItem("usuario_token", JSON.stringify(resp["token"]));
         });
     } catch (e) {
-        console.log("Houve algum erro ou usuário não encontrado");
+        console.log("Houve algum erro ou usuÃ¡rio nÃ£o encontrado");
         return false;
     }
 
-};
+}
+;
 
 docReady(function () {
     var usuario_logado = localStorage.getItem("usuario_logado");
     var usuario_nome = localStorage.getItem("usuario_nome");
     if (usuario_logado || usuario_logado === "true") {
-        console.log("Você está logado como: " + usuario_nome);
+        console.log("VocÃª estÃ¡ logado como: " + usuario_nome);
         exibirConsulta(usuario_nome);
     }
 });
 
-function buscar(){
+function buscar() {
     var container = document.querySelector('.listaB');
-    document.querySelector('.consultaB').addEventListener('click', function(){
-            var query = document.querySelector('.caixaB').value
-            axios.get('https://api.dictionaryapi.dev/api/v2/entries/en/' + query)
-            .then(function(res){
-
+    var query = document.querySelector('.caixaB').value;
+    axios.get('https://api.dictionaryapi.dev/api/v2/entries/en/' + query)
+            .then(function (res) {
+                console.log(res)
                 var elemento = document.getElementById("lB");
                 while (elemento.firstChild) {
                     elemento.removeChild(elemento.firstChild);
                 }
+                var dataAlready = [];
+                var ponto = 0;
+                console.log(res["data"]);
 
-                var response = res.data[0].meanings;    
-                    for(var i = 0; i < Object.keys(response).length; i++ ){
-                        var li = document.createElement('li');
-                        li.innerHTML = response[i].definitions[0].definition; 
-                        container.appendChild(li);
-                    };
-             });
-    });   
-};
+                for (var i = 0; i < Object.size(res["data"]); i++) {
+
+                    for (var j = 0; j < Object.size(res["data"][i]["meanings"]); j++) {
+
+                        for (var l = 0; l < Object.size(res["data"][i]["meanings"][j]); l++) {
+
+
+                            for (var t = 0; t < Object.size(res["data"][i]["meanings"][j]["definitions"]); t++) {
+
+
+                                for (var h = 0; h < dataAlready.length; h++) {
+                                    if (res["data"][i]["meanings"][j]["definitions"][t]["definition"].toString() === dataAlready[h].toString()) {
+                                        ponto++;
+                                    }
+                                }
+                                if (ponto === 0) {
+
+
+                                    dataAlready.push(res["data"][i]["meanings"][j]["definitions"][t]["definition"].toString());
+
+                                }
+                                ponto = 0;
+
+                            }
+
+                        }
+
+                    }
+                }
+                console.log(dataAlready);
+                var li;
+                for (var x = 0; x < dataAlready.length; x++) {
+                    li = document.createElement('li');
+                    li.innerHTML = dataAlready[x];
+                    container.appendChild(li);
+                }
+
+            });
+     
+}
+;
