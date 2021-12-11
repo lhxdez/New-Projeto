@@ -33,7 +33,7 @@ module.exports = {
       }
 
       if (dbuser.email === user.email && dbuser.password === user.password) {
-        console.log("foi");
+        return res.status(200).send(dbuser.login);
       } else {
         return res.status(409).send({ error: "Email ou Senha Incorreta" });
       }

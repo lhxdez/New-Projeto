@@ -30,22 +30,61 @@ function fecharLogin() {
     pegarElemento("telaLogin").style.display = 'none';
 }
 
-/*FunÃ§Ã£o para exibir o modal de consulta caso o usuÃ¡rio esteja logado*/
-function exibirConsulta(nome) {
+/*Exibir modal de cadastro*/
+function exibirCadastro() {
+    pegarElemento("telaCadastro").style.display = 'block';
+}
+
+/*FunÃ§Ã£o para fechar o modal de cadastro*/
+function fecharCadastro() {
+    pegarElemento("telaCadastro").style.display = 'none';
+}
+ /* Função para exibir a tela principal */
+function exibirMenu(nome){
     fecharLogin();
     pegarElemento("welcomeText").innerHTML = "BEM VINDO(A) " + nome;
+    localStorage.setItem("usuario_nome", JSON.stringify(nome));
+    pegarElemento("telaPrincipal").style.display = 'block';
+}
+
+/* Função para exibir o modal de consulta */
+function exibirConsulta() {
     pegarElemento("telaConsulta").style.display = 'block';
 }
 
+/* Função para exibir o modal de postar */
+function exibirPostar() {
+    pegarElemento("telaPostar").style.display = 'block';
+}
+
+/* Função para sair do modal de consulta */
+function fecharConsulta() {
+    pegarElemento("telaConsulta").style.display = 'none';
+}
+
+/* Função para sair do modal de postagem */
+function fecharPostar() {
+    pegarElemento("telaPostar").style.display = 'none';
+}
+
+/* Sair da tela principal */
 function logout() {
     localStorage.clear();
     pegarElemento("loginEmail").value = "";
     pegarElemento("loginSenha").value = "";
-    pegarElemento("telaConsulta").style.display = 'none';
+    pegarElemento("telaPrincipal").style.display = 'none';
 }
 
 /*Fechar o modal se clicar fora da div de login*/
 var modal = pegarElemento("telaLogin");
+window.onclick = function (event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
+
+/*Fechar o modal se clicar fora da div de cadastro*/
+var modal = pegarElemento("telaCadastro");
 window.onclick = function (event) {
     if (event.target == modal) {
         modal.style.display = "none";
@@ -126,7 +165,51 @@ function pegar_nome(page, email) {
 }
 ;
 
-/*FunÃ§Ãµes para conferir os campos de email e senha a cada tecla*/
+/*Funções para conferir os campos de login, email e senha a cada tecla no cadastro*/
+var cadastroLogin = pegarElemento("cadastroLogin");
+var cadastroEmail = pegarElemento("cadastroEmail");
+var cadastroSenha = pegarElemento("cadastroSenha");
+
+cadastroLogin.addEventListener('keyup', function () {
+    var login = cadastroLogin.value;
+    var erro = pegarElemento("loginErrorCadastro");
+
+    if (!login || login.length < 1 || typeof login === "undefined") {
+        erro.innerHTML = "*NOME DE USUÁRIO INVÁLIDO";
+        cadastroLogin.className = "caixaTextoErro";
+    } else {
+        erro.innerHTML = "";
+        cadastroLogin.className = "caixaTexto";
+    }
+})
+
+cadastroEmail.addEventListener('keyup', function () {
+    var email = cadastroEmail.value;
+    var erro = pegarElemento("emailErrorCadastro");
+
+    if (!email || email.length <= 3 || typeof email === "undefined") {
+        erro.innerHTML = "*EMAIL INVÁLIDO";
+        cadastroEmail.className = "caixaTextoErro";
+    } else {
+        erro.innerHTML = "";
+        cadastroEmail.className = "caixaTexto";
+    }
+})
+
+cadastroSenha.addEventListener('keyup', function () {
+    var senha = cadastroSenha.value;
+    var erro = pegarElemento("passwordErrorCadastro");
+
+    if (!senha || senha.length <= 3 || typeof senha === "undefined") {
+        erro.innerHTML = "*SENHA MUITO CURTA";
+        cadastroSenha.className = "caixaTextoErro";
+    } else {
+        erro.innerHTML = "";
+        cadastroSenha.className = "caixaTexto";
+    }
+})
+
+/*Funções para conferir os campos de email e senha a cada tecla no login*/
 var inputEmail = pegarElemento("loginEmail");
 var inputSenha = pegarElemento("loginSenha");
 
@@ -156,40 +239,93 @@ inputSenha.addEventListener('keyup', function () {
     }
 })
 
-/*FunÃ§Ã£o chamada pelo botÃ£o de logar*/
-function logar() {
-    var email = pegarElemento("loginEmail").value;
-    var senha = pegarElemento("loginSenha").value;
+/*Função chamada pelo botão de cadastrar*/
+function cadastrar() {
+    var login = pegarElemento("cadastroLogin").value;
+    var email = pegarElemento("cadastroEmail").value;
+    var password = pegarElemento("cadastroSenha").value;
+
+    if (!login || login.length < 1 || typeof login === "undefined") {
+        swal("Erro", "Preencha os campos corretamente", "error");
+        return false;
+    }
 
     if (!email || email.length <= 3 || typeof email === "undefined") {
         swal("Erro", "Preencha os campos corretamente", "error");
         return false;
     }
 
-    if (!senha || senha.length <= 3 || typeof senha === "undefined") {
+    if (!password || password.length <= 3 || typeof password === "undefined") {
         swal("Erro", "Preencha os campos corretamente", "error");
         return false;
     }
 
-    try {
-        http_request("https://reqres.in/api/login", "POST", true, {
-            "email": email,
-            "password": senha
-        }, function (e) {
-            var resp = JSON.parse(e);
-            pegarElemento("user_token").value = resp["token"];
-            pegar_nome(1, email);
-            console.log("Logado com sucesso!");
-            localStorage.setItem("usuario_logado", JSON.stringify("true"));
-            localStorage.setItem("usuario_token", JSON.stringify(resp["token"]));
+    axios.post('http://localhost:3333/register', {login, email, password})
+        .then(function (res){
+            console.log(res.data)
+            swal("Sucesso", "Cadastrado com sucesso", "success");
+            fecharCadastro();
         });
-    } catch (e) {
-        console.log("Houve algum erro ou usuÃ¡rio nÃ£o encontrado");
-        return false;
-    }
+}
+
+/*Função chamada pelo botão de logar*/
+function logar() {
+    var email = pegarElemento("loginEmail").value;
+    var password = pegarElemento("loginSenha").value;
+
+    axios.post('http://localhost:3333/login', {email, password})
+        .then(function (res){
+            fecharLogin();
+            exibirMenu(res.data);
+        });
 
 }
-;
+
+/*Função chamada pelo botão de postar */
+function postar(){
+    var title = pegarElemento("postTitulo").value;
+    var content = pegarElemento("postContent").value;
+    var author = localStorage.getItem("usuario_nome");
+
+    axios.post('http://localhost:3333/registerPost', {title, content, author})
+        .then(function (res){
+            swal("Sucesso", "Postagem feita", "success");
+            pegarElemento("postTitulo").value = "";
+            pegarElemento("postContent").value = "";
+            fecharPostar();
+        });
+}
+
+/*Função chamada pelo botão de buscar */
+function consultar(){
+    var title = pegarElemento("contSearch").value;
+    var container = document.querySelector('.listaB');
+    var query = document.querySelector('.caixaB').value;
+    axios.post('http://localhost:3333/searchPost', {title})
+        .then(function (res){
+            console.log(res["data"]["dbpost"]);
+            
+            var elemento = document.getElementById("lB");
+            while (elemento.firstChild) {
+                elemento.removeChild(elemento.firstChild);
+            }
+
+            var dataAlready = [];
+            var ponto = 0;
+
+            for (var i = 0; i < Object.size(res["data"]); i++){
+                //dataAlready.push(res["data"][i]["content"].toString());
+            }
+
+            console.log(dataAlready);
+            var li;
+            for (var x = 0; x < dataAlready.length; x++) {
+                li = document.createElement('li');
+                li.innerHTML = dataAlready[x];
+                container.appendChild(li);
+            }
+        });
+}
 
 docReady(function () {
     var usuario_logado = localStorage.getItem("usuario_logado");
@@ -206,7 +342,7 @@ function buscar() {
     axios.get('https://api.dictionaryapi.dev/api/v2/entries/en/' + query)
             .then(function (res) {
                 console.log(res)
-                var elemento = document.getElementById("lB");
+                var elemento = pegarElemento("lB");
                 while (elemento.firstChild) {
                     elemento.removeChild(elemento.firstChild);
                 }

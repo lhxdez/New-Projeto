@@ -287,9 +287,16 @@ header{
     min-width: 0px;
 }
 
-.centralizar{
+.centralizarRow{
     display: flex;
     justify-content: center;
+}
+
+.centralizarColumn{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
 }
 
 .errorMessage{

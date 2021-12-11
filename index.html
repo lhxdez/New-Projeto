@@ -33,23 +33,94 @@
                 </div>
             </div>
             <!-- Fim do modal de login -->
-            <!-- Início do modal de consulta -->
+            <!-- Início do modal de cadastro -->
+            <div id="telaCadastro" class="modal">
+                <div class="modal-content">
+                    <div class="imgContainer">
+                        <span onclick="fecharCadastro()" class="closeIcon" title="Fechar Cadastro">x</span>
+                        <svg viewBox="0 0 24 24" class="birdLogin"><path d="M23.643 4.937c-.835.37-1.732.62-2.675.733.962-.576 1.7-1.49 2.048-2.578-.9.534-1.897.922-2.958 1.13-.85-.904-2.06-1.47-3.4-1.47-2.572 0-4.658 2.086-4.658 4.66 0 .364.042.718.12 1.06-3.873-.195-7.304-2.05-9.602-4.868-.4.69-.63 1.49-.63 2.342 0 1.616.823 3.043 2.072 3.878-.764-.025-1.482-.234-2.11-.583v.06c0 2.257 1.605 4.14 3.737 4.568-.392.106-.803.162-1.227.162-.3 0-.593-.028-.877-.082.593 1.85 2.313 3.198 4.352 3.234-1.595 1.25-3.604 1.995-5.786 1.995-.376 0-.747-.022-1.112-.065 2.062 1.323 4.51 2.093 7.14 2.093 8.57 0 13.255-7.098 13.255-13.254 0-.2-.005-.402-.014-.602.91-.658 1.7-1.477 2.323-2.41z"></path></svg>
+                    </div>
+                    <div class="modalContainer">
+                        <div>
+                            <label class="modalFontStyle">NOME DE USUÁRIO</label>
+                            <input id="cadastroLogin" type="text" placeholder="Informe seu nome de usuario" class="caixaTexto"/>
+                            <span id="loginErrorCadastro" class="errorMessage"></span>
+                        </div>
+                        <div>
+                            <label class="modalFontStyle">E-MAIL</label>
+                            <input id="cadastroEmail" type="text" placeholder="Informe seu e-mail" class="caixaTexto"/>
+                            <span id="emailErrorCadastro" class="errorMessage"></span>
+                        </div>
+                        <div>
+                            <label class="modalFontStyle">SENHA</label>
+                            <input id="cadastroSenha" type="password" placeholder="Informe sua senha" class="caixaTexto"/>
+                            <span id="passwordErrorCadastro" class="errorMessage"></span>
+                        </div>
+                        <input type="hidden" id="user_token" />
+                        <button onclick="cadastrar()" class="modalButton modalFontStyle">CADASTRAR</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Fim do modal de cadastro -->
+            <!-- Início do modal de tela principal -->
+            <div id="telaPrincipal" class="modal-consulta">
+                <div class="consulta-content">
+                    <div class="imgContainer">
+                        <svg viewBox="0 0 24 24" class="birdLogin"><path d="M23.643 4.937c-.835.37-1.732.62-2.675.733.962-.576 1.7-1.49 2.048-2.578-.9.534-1.897.922-2.958 1.13-.85-.904-2.06-1.47-3.4-1.47-2.572 0-4.658 2.086-4.658 4.66 0 .364.042.718.12 1.06-3.873-.195-7.304-2.05-9.602-4.868-.4.69-.63 1.49-.63 2.342 0 1.616.823 3.043 2.072 3.878-.764-.025-1.482-.234-2.11-.583v.06c0 2.257 1.605 4.14 3.737 4.568-.392.106-.803.162-1.227.162-.3 0-.593-.028-.877-.082.593 1.85 2.313 3.198 4.352 3.234-1.595 1.25-3.604 1.995-5.786 1.995-.376 0-.747-.022-1.112-.065 2.062 1.323 4.51 2.093 7.14 2.093 8.57 0 13.255-7.098 13.255-13.254 0-.2-.005-.402-.014-.602.91-.658 1.7-1.477 2.323-2.41z"></path></svg>
+                    </div>
+                    <div class="centralizarRow">
+                        <span id="welcomeText" class="header-hero-two"></span>
+                    </div>
+                    <div class="modalContainer">
+                        <div class="centralizarColumn">
+                            <button id="buttonPostar" onclick="exibirPostar()" class="modalConsultaButton modalFontStyle">CRIAR POST</button>
+                            <button onclick="exibirConsulta()" class="modalConsultaButton modalFontStyle">BUSCAR POST</button>
+                            <button onclick="logout()" class="modalConsultaButton logoutButton modalFontStyle">LOGOUT</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Fim do modal de tela principal -->
+            <!-- Início do modal de post -->
+            <div id="telaPostar" class="modal-consulta">
+                <div class="consulta-content">
+                    <div class="imgContainer">
+                        <svg viewBox="0 0 24 24" class="birdLogin"><path d="M23.643 4.937c-.835.37-1.732.62-2.675.733.962-.576 1.7-1.49 2.048-2.578-.9.534-1.897.922-2.958 1.13-.85-.904-2.06-1.47-3.4-1.47-2.572 0-4.658 2.086-4.658 4.66 0 .364.042.718.12 1.06-3.873-.195-7.304-2.05-9.602-4.868-.4.69-.63 1.49-.63 2.342 0 1.616.823 3.043 2.072 3.878-.764-.025-1.482-.234-2.11-.583v.06c0 2.257 1.605 4.14 3.737 4.568-.392.106-.803.162-1.227.162-.3 0-.593-.028-.877-.082.593 1.85 2.313 3.198 4.352 3.234-1.595 1.25-3.604 1.995-5.786 1.995-.376 0-.747-.022-1.112-.065 2.062 1.323 4.51 2.093 7.14 2.093 8.57 0 13.255-7.098 13.255-13.254 0-.2-.005-.402-.014-.602.91-.658 1.7-1.477 2.323-2.41z"></path></svg>
+                    </div>
+                    <div class="centralizarRow">
+                        <span id="welcomeText" class="header-hero-two"></span>
+                    </div>
+                    <div class="modalContainer">
+                        <div>
+                            <label class="modalFontStyle">FAÇA SEU POST</label>
+                            <input id="postTitulo" type="text" placeholder="Titulo/Assunto do post" class="caixaTexto"/>
+                            <input id="postContent" type="text" placeholder="Conteúdo do post" class="caixaTexto"/>
+                        </div>
+                        <div class="centralizarRow">
+                            <button onclick="fecharPostar()" class="modalConsultaButton modalFontStyle">VOLTAR</button>
+                            <button onclick="postar()" class="modalConsultaButton modalFontStyle">POSTAR</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Fim do modal de post -->
+            <!-- Início do modal de busca -->
             <div id="telaConsulta" class="modal-consulta">
                 <div class="consulta-content">
                     <div class="imgContainer">
                         <svg viewBox="0 0 24 24" class="birdLogin"><path d="M23.643 4.937c-.835.37-1.732.62-2.675.733.962-.576 1.7-1.49 2.048-2.578-.9.534-1.897.922-2.958 1.13-.85-.904-2.06-1.47-3.4-1.47-2.572 0-4.658 2.086-4.658 4.66 0 .364.042.718.12 1.06-3.873-.195-7.304-2.05-9.602-4.868-.4.69-.63 1.49-.63 2.342 0 1.616.823 3.043 2.072 3.878-.764-.025-1.482-.234-2.11-.583v.06c0 2.257 1.605 4.14 3.737 4.568-.392.106-.803.162-1.227.162-.3 0-.593-.028-.877-.082.593 1.85 2.313 3.198 4.352 3.234-1.595 1.25-3.604 1.995-5.786 1.995-.376 0-.747-.022-1.112-.065 2.062 1.323 4.51 2.093 7.14 2.093 8.57 0 13.255-7.098 13.255-13.254 0-.2-.005-.402-.014-.602.91-.658 1.7-1.477 2.323-2.41z"></path></svg>
                     </div>
-                    <div class="centralizar">
+                    <div class="centralizarRow">
                         <span id="welcomeText" class="header-hero-two"></span>
                     </div>
                     <div class="modalContainer">
                         <div>
-                            <label class="modalFontStyle">DICIONÁRIO DE INGLÊS</label>
+                            <label class="modalFontStyle">PROCURE POSTS PELO TÍTULO/ASSUNTO</label>
                             <input id="contSearch" type="text" placeholder="Insira a palavra chave para a busca" class="caixaTexto caixaB"/>
                         </div>
-                        <div class="centralizar">
-                            <button onclick="logout()" class="modalConsultaButton logoutButton modalFontStyle">LOGOUT</button>
-                            <button onclick="buscar()" class="modalConsultaButton modalFontStyle consultaB">BUSCAR</button>
+                        <div class="centralizarRow">
+                            <button onclick="fecharConsulta()" class="modalConsultaButton modalFontStyle">VOLTAR</button>
+                            <button onclick="consultar()" class="modalConsultaButton modalFontStyle">BUSCAR</button>
                         </div>
                         <div>
                             <ul id="lB" class="listaB"></ul>
@@ -57,7 +128,7 @@
                     </div>
                 </div>
             </div>
-            <!-- Fim do modal de consulta -->
+            <!-- Fim do modal de buscar -->
             <div class="container">
                 <div class='imagem flutuante'>
                     <div class = "twitterbg">
@@ -92,9 +163,9 @@
                                     </button>
                                 </div>
                                 <div>
-                                    <button class="btnT">
+                                    <button class="btnT" onclick="exibirCadastro()">
                                         <div>
-                                            <div class="txt-ellipses"><b>Inscreva-se com número de celular ou e-mail</b></div>
+                                            <div class="txt-ellipses"><b>Cadastre-se agora</b></div>
                                         </div>
                                     </button>
                                 </div>

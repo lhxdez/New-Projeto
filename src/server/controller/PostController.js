@@ -4,19 +4,15 @@ const Post = require("../model/Posts");
 module.exports = {
   async searchPost(req, res) {
     const post = req.body;
-    // const dbuser = await User.findOne({email : user.email});
     const { title } = req.body;
-    const dbpost = await Post.findOne({ title });
+    const dbpost = await Post.find({ title });
     try {
-      if (!dbpost) {
-        return res.status(409).send({ error: "Post não cadastrado!" });
-      }
-
-      if (dbpost.title === post.title) {
-        console.log("foi");
+      
+      if(await Post.find({ title })){
+        console.log('foi');
         return res.status(201).send({dbpost});
-      } else {
-        return res.status(409).send({ error: "Post Incorreta" });
+      }else{
+        return res.status(409).send({ error: "Sem resultados" });
       }
     } catch (error) {
       console.log(error);
