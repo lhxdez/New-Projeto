@@ -246,17 +246,17 @@ function cadastrar() {
     var password = pegarElemento("cadastroSenha").value;
 
     if (!login || login.length < 1 || typeof login === "undefined") {
-        swal("Erro", "Preencha os campos corretamente", "error");
+        swal("Erro", "Escolha um nome de usuário válido", "error");
         return false;
     }
 
     if (!email || email.length <= 3 || typeof email === "undefined") {
-        swal("Erro", "Preencha os campos corretamente", "error");
+        swal("Erro", "Insira um e-mail válido", "error");
         return false;
     }
 
     if (!password || password.length <= 3 || typeof password === "undefined") {
-        swal("Erro", "Preencha os campos corretamente", "error");
+        swal("Erro", "Insira uma senha válida", "error");
         return false;
     }
 
@@ -287,6 +287,16 @@ function postar(){
     var content = pegarElemento("postContent").value;
     var author = localStorage.getItem("usuario_nome");
 
+    if (!title || title.length < 1 || typeof title === "undefined") {
+        swal("Erro", "O post deve ter um título/assunto", "error");
+        return false;
+    }
+
+    if (!content || content.length <= 3 || typeof content === "undefined") {
+        swal("Erro", "O post deve ter um conteúdo", "error");
+        return false;
+    }
+
     axios.post('http://localhost:3333/registerPost', {title, content, author})
         .then(function (res){
             swal("Sucesso", "Postagem feita", "success");
@@ -300,10 +310,8 @@ function postar(){
 function consultar(){
     var title = pegarElemento("contSearch").value;
     var container = document.querySelector('.listaB');
-    var query = document.querySelector('.caixaB').value;
     axios.post('http://localhost:3333/searchPost', {title})
         .then(function (res){
-            console.log(res["data"]["dbpost"]);
             
             var elemento = document.getElementById("lB");
             while (elemento.firstChild) {
@@ -311,10 +319,11 @@ function consultar(){
             }
 
             var dataAlready = [];
-            var ponto = 0;
 
-            for (var i = 0; i < Object.size(res["data"]); i++){
-                //dataAlready.push(res["data"][i]["content"].toString());
+            for (var i = 0; i < Object.size(res["data"]["dbpost"]); i++){
+                dataAlready.push(res["data"]["dbpost"][i]["title"].toString());
+                dataAlready.push(res["data"]["dbpost"][i]["content"].toString());
+                dataAlready.push(res["data"]["dbpost"][i]["author"].toString());
             }
 
             console.log(dataAlready);
@@ -324,6 +333,7 @@ function consultar(){
                 li.innerHTML = dataAlready[x];
                 container.appendChild(li);
             }
+
         });
 }
 
@@ -335,59 +345,3 @@ docReady(function () {
         exibirConsulta(usuario_nome);
     }
 });
-
-function buscar() {
-    var container = document.querySelector('.listaB');
-    var query = document.querySelector('.caixaB').value;
-    axios.get('https://api.dictionaryapi.dev/api/v2/entries/en/' + query)
-            .then(function (res) {
-                console.log(res)
-                var elemento = pegarElemento("lB");
-                while (elemento.firstChild) {
-                    elemento.removeChild(elemento.firstChild);
-                }
-                var dataAlready = [];
-                var ponto = 0;
-                console.log(res["data"]);
-
-                for (var i = 0; i < Object.size(res["data"]); i++) {
-
-                    for (var j = 0; j < Object.size(res["data"][i]["meanings"]); j++) {
-
-                        for (var l = 0; l < Object.size(res["data"][i]["meanings"][j]); l++) {
-
-
-                            for (var t = 0; t < Object.size(res["data"][i]["meanings"][j]["definitions"]); t++) {
-
-
-                                for (var h = 0; h < dataAlready.length; h++) {
-                                    if (res["data"][i]["meanings"][j]["definitions"][t]["definition"].toString() === dataAlready[h].toString()) {
-                                        ponto++;
-                                    }
-                                }
-                                if (ponto === 0) {
-
-
-                                    dataAlready.push(res["data"][i]["meanings"][j]["definitions"][t]["definition"].toString());
-
-                                }
-                                ponto = 0;
-
-                            }
-
-                        }
-
-                    }
-                }
-                console.log(dataAlready);
-                var li;
-                for (var x = 0; x < dataAlready.length; x++) {
-                    li = document.createElement('li');
-                    li.innerHTML = dataAlready[x];
-                    container.appendChild(li);
-                }
-
-            });
-     
-}
-;

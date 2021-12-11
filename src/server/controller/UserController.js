@@ -23,7 +23,6 @@ module.exports = {
 
   async login(req, res) {
     const user = req.body;
-    // const dbuser = await User.findOne({email : user.email});
     const { email } = req.body;
     const dbuser = await User.findOne({ email });
 
