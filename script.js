@@ -7,7 +7,7 @@ Object.size = function (obj) {
         if (obj.hasOwnProperty(key))
             size++;
     }
-    return size;
+    return size;.
 };
 
 function pegarElemento(valor) {
@@ -260,7 +260,7 @@ function cadastrar() {
         return false;
     }
 
-    axios.post('http://localhost:3333/register', {login, email, password})
+    axios.post('https://lhxdez.github.io/New-Projeto/register', {login, email, password})
         .then(function (res){
             console.log(res.data)
             swal("Sucesso", "Cadastrado com sucesso", "success");
@@ -273,7 +273,7 @@ function logar() {
     var email = pegarElemento("loginEmail").value;
     var password = pegarElemento("loginSenha").value;
 
-    axios.post('http://localhost:3333/login', {email, password})
+    axios.post('https://lhxdez.github.io/New-Projeto/login', {email, password})
         .then(function (res){
             fecharLogin();
             exibirMenu(res.data);
@@ -297,7 +297,7 @@ function postar(){
         return false;
     }
 
-    axios.post('http://localhost:3333/registerPost', {title, content, author})
+    axios.post('https://lhxdez.github.io/New-Projeto/registerPost', {title, content, author})
         .then(function (res){
             swal("Sucesso", "Postagem feita", "success");
             pegarElemento("postTitulo").value = "";
@@ -310,7 +310,7 @@ function postar(){
 function consultar(){
     var title = pegarElemento("contSearch").value;
     var container = document.querySelector('.listaB');
-    axios.post('http://localhost:3333/searchPost', {title})
+    axios.post('https://lhxdez.github.io/New-Projeto/searchPost', {title})
         .then(function (res){
             
             var elemento = document.getElementById("lB");
